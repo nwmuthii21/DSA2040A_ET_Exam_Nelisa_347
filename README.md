@@ -85,6 +85,19 @@ Jupyter Notebook
 
 ### Transformed files will appear in the transformed/ folder
 
+## Load & Verification
+## etl_loaded.ipynb
+For the Load phase of my ETL pipeline, I chose to use SQLite3 to store the transformed datasets. I loaded both transformed_full.csv and transformed_incremental.csv into a SQLite database file named full_data.db
+A snippet of the code
+```
+pd.read_sql('SELECT * FROM full_data LIMIT 5', conn)
+```
+Issues & Solutions:
+Initially, I considered saving the data in Parquet format as well, but ran into an ImportError due to missing dependencies (pyarrow or fastparquet). I resolved this by installing pyarrow via pip:
+``` 
+pip install pyarrow
+```
+
 ## FOLDER STRUCTURE
 ```
 et_exam_Nelisa_347/
@@ -97,7 +110,12 @@ et_exam_Nelisa_347/
 ├── transformed/
 │   ├── transformed_full.csv
 │   └── transformed_incremental.csv
+├── loaded/
+│   ├── full_data.db
+│   ├── full_data.parquet
+│   ├── incremental_data.parquet
 ├── etl_extract.ipynb
 ├── etl_transform.ipynb
+├── etl_load.ipynb
 ├── README.md
 └── .gitignore
